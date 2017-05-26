@@ -21,30 +21,29 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
-        Bitmap a = BitmapFactory.decodeResource(getResources(), R.drawable.background);
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.androide);
+        Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.androide);
 
-        Bitmap bmpImages = overlayBitmapToCenter(a, b);
+        Bitmap bmpImages = overlayBitmap(background, image);
         imageView.setImageBitmap(bmpImages);
     }
 
 
-    public static Bitmap overlayBitmapToCenter(Bitmap bitmap1, Bitmap bitmap2) {
-        int bitmap1Width = bitmap1.getWidth();
-        int bitmap1Height = bitmap1.getHeight();
-        int bitmap2Width = bitmap2.getWidth();
-        int bitmap2Height = bitmap2.getHeight();
+    public static Bitmap overlayBitmap(Bitmap bitmapBackground, Bitmap bitmapImage) {
 
-        Log.i(TAG, "bitmap1Width: " + bitmap1Width + ", bitmap1Height: " + bitmap1Height);
-        Log.i(TAG, "bitmap2Width: " + bitmap2Width + ", bitmap2Height: " + bitmap2Height);
+        int bitmap1Width = bitmapBackground.getWidth();
+        int bitmap1Height = bitmapBackground.getHeight();
+        int bitmap2Width = bitmapImage.getWidth();
+        int bitmap2Height = bitmapImage.getHeight();
 
         float marginLeft = (float) (bitmap1Width * 0.5 - bitmap2Width * 0.5);
         float marginTop = (float) (bitmap1Height * 0.5 - bitmap2Height * 0.5);
 
-        Bitmap overlayBitmap = Bitmap.createBitmap(bitmap1Width, bitmap1Height, bitmap1.getConfig());
+        Bitmap overlayBitmap = Bitmap.createBitmap(bitmap1Width, bitmap1Height, bitmapBackground.getConfig());
         Canvas canvas = new Canvas(overlayBitmap);
-        canvas.drawBitmap(bitmap1, new Matrix(), null);
-        canvas.drawBitmap(bitmap2, marginLeft, marginTop, null);
+        canvas.drawBitmap(bitmapBackground, new Matrix(), null);
+        canvas.drawBitmap(bitmapImage, marginLeft, marginTop, null);
+
         return overlayBitmap;
     }
 
